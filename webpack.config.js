@@ -5,6 +5,7 @@ const deps = require("./package.json").dependencies;
 module.exports = {
   output: {
     publicPath: "http://localhost:8000/",
+    globalObject: "this"
   },
 
   resolve: {
@@ -41,10 +42,11 @@ module.exports = {
 
   plugins: [
     new ModuleFederationPlugin({
-      name: "demo_microfrontend_core",
-      filename: "remoteEntry.js",
-      remotes: {},
-      exposes: {},
+      name: "core",
+      filename: "core.js",
+      exposes: {
+        './getRandom': './src/utils/getRandom.ts'
+      },
       shared: {
         ...deps,
       },
